@@ -1,61 +1,87 @@
 {% assign sid = section.id %}
-<section id="per-reading-{{ sid }}" class="per-reading-wrap color-{{ section.settings.color_scheme }}">
+<section id="per-reading-{{ sid }}" class="per-reading-wrap color-{{ section.settings.color_scheme }}" data-per-app>
+  <div class="per-reading-bg-orb per-reading-bg-orb--a" aria-hidden="true"></div>
+  <div class="per-reading-bg-orb per-reading-bg-orb--b" aria-hidden="true"></div>
+  <div class="per-reading-bg-orb per-reading-bg-orb--c" aria-hidden="true"></div>
+
   <div class="per-reading-shell page-width">
     <section class="per-reading-hero per-reading-glass">
       <div class="per-reading-hero__col per-reading-hero__left">
         <p class="per-reading-kicker">{{ section.settings.eyebrow }}</p>
         <h1>{{ section.settings.title }}</h1>
-        <p>{{ section.settings.subtitle }}</p>
+        <p class="per-reading-subtitle">{{ section.settings.subtitle }}</p>
+
+        <div class="per-reading-chiprow">
+          <span class="per-reading-chip">60干支循環</span>
+          <span class="per-reading-chip">位相法相性</span>
+          <span class="per-reading-chip">宇宙盤分析</span>
+        </div>
+
         <div class="per-reading-hero__ctas">
           <a class="per-reading-btn per-reading-btn--gold" href="{{ section.settings.primary_button_link }}">{{ section.settings.primary_button_label }}</a>
           <a class="per-reading-btn per-reading-btn--line" href="#per-reading-diagnosis-{{ sid }}">{{ section.settings.secondary_button_label }}</a>
         </div>
       </div>
-      <div class="per-reading-hero__col per-reading-hero__center">
-        <canvas id="per-reading-circle-{{ sid }}" width="360" height="360" aria-label="PER 60干支円"></canvas>
-        <p class="per-reading-mini">60干支円から日干支を表示し、十干・十二支の性質を可視化</p>
+
+      <div class="per-reading-hero__col per-reading-hero__center per-reading-glass-soft">
+        <canvas id="per-reading-circle-{{ sid }}" width="360" height="360" aria-label="PER 60干支円" data-per-circle></canvas>
+        <p class="per-reading-mini">日干支の重心を可視化し、関係性の距離と共鳴を読み解きます。</p>
       </div>
+
       <aside class="per-reading-hero__col per-reading-hero__right per-reading-glass-soft">
         <h3>無料PER診断</h3>
-        <p>生年月日と5問の直感質問で、PERタイプ・相性・行動領域を同時分析。</p>
+        <p>生年月日 × 5問の直感回答で、PERタイプ・相性・行動領域を同時解析。</p>
         <button class="per-reading-btn per-reading-btn--pink" data-per-start>無料診断を開始</button>
       </aside>
     </section>
 
-    <section class="per-reading-features per-reading-glass">
-      <h2>PER占いでわかること</h2>
-      <div class="per-reading-grid4">
-        <article><h3>恋愛傾向</h3><p>日支と回答傾向から恋愛時の反応・距離感を解析。</p></article>
-        <article><h3>仕事の強み</h3><p>PERタイプと宇宙盤指標を連動し、現実推進力を可視化。</p></article>
-        <article><h3>相性診断</h3><p>位相法・季節位相の相性名とスコアを同時表示。</p></article>
-        <article><h3>運命の流れ</h3><p>現在の行動領域バランスから開運アクションを提示。</p></article>
+    <section id="per-reading-diagnosis-{{ sid }}" class="per-reading-diagnosis per-reading-glass" data-per-diagnosis>
+      <div class="per-reading-headline">
+        <h2>診断セッション</h2>
+        <p>あなたとお相手の生年月日を入力し、設問に答えてください。</p>
       </div>
-    </section>
 
-    <section id="per-reading-diagnosis-{{ sid }}" class="per-reading-diagnosis per-reading-glass">
-      <h2>無料診断UI</h2>
       <div class="per-reading-formrow">
-        <label>あなたの生年月日<input type="date" data-per-self-dob></label>
-        <label>お相手の生年月日<input type="date" data-per-partner-dob></label>
-        <label>性別<select data-per-gender><option value="female">女性</option><option value="male">男性</option><option value="other">その他</option></select></label>
+        <label>あなたの生年月日
+          <input type="date" data-per-self-dob>
+        </label>
+        <label>お相手の生年月日
+          <input type="date" data-per-partner-dob>
+        </label>
+        <label>性別
+          <select data-per-gender>
+            <option value="female">女性</option>
+            <option value="male">男性</option>
+            <option value="other">その他</option>
+          </select>
+        </label>
       </div>
-      <div class="per-reading-question" data-per-question></div>
-      <div class="per-reading-ab">
-        <button class="per-reading-btn per-reading-btn--line" data-per-answer="A">Aを選択</button>
-        <button class="per-reading-btn per-reading-btn--line" data-per-answer="B">Bを選択</button>
+
+      <div class="per-reading-question-card">
+        <div class="per-reading-question" data-per-question></div>
+        <div class="per-reading-ab">
+          <button class="per-reading-btn per-reading-btn--line" data-per-answer="A">Aを選択</button>
+          <button class="per-reading-btn per-reading-btn--line" data-per-answer="B">Bを選択</button>
+        </div>
       </div>
+
       <div class="per-reading-progress"><span data-per-progress></span></div>
-      <button class="per-reading-btn per-reading-btn--gold" data-per-next>次へ</button>
+      <button class="per-reading-btn per-reading-btn--gold per-reading-next" data-per-next>次へ</button>
+      <p class="per-reading-feedback" data-per-feedback hidden></p>
     </section>
 
     <section class="per-reading-results per-reading-glass" data-per-result hidden>
-      <h2>診断結果</h2>
+      <h2>PER診断結果</h2>
       <div class="per-reading-grid2">
         <article class="per-reading-card">
-          <h3 data-per-type-title>PERタイプ</h3><p data-per-type-feature></p><p data-per-type-strength></p><p data-per-type-caution></p>
+          <h3 data-per-type-title>PERタイプ</h3>
+          <p data-per-type-feature></p>
+          <p data-per-type-strength></p>
+          <p data-per-type-caution></p>
         </article>
         <article class="per-reading-card per-reading-card--paper">
-          <h3>鑑定書</h3><p data-per-report></p>
+          <h3>鑑定書</h3>
+          <p data-per-report></p>
         </article>
       </div>
     </section>
@@ -63,70 +89,134 @@
     <section class="per-reading-compat per-reading-glass" data-per-compat hidden>
       <h2>相性診断結果</h2>
       <div class="per-reading-grid2">
-        <div class="per-reading-card"><p class="per-reading-score" data-per-compat-score></p><h3 data-per-compat-type></h3><p data-per-compat-text></p></div>
+        <div class="per-reading-card">
+          <p class="per-reading-score" data-per-compat-score></p>
+          <h3 data-per-compat-type></h3>
+          <p data-per-compat-text></p>
+        </div>
         <div class="per-reading-card per-reading-sil">
-          {% if section.settings.silhouette_image != blank %}<img src="{{ section.settings.silhouette_image | image_url: width: 700 }}" alt="男女シルエット" loading="lazy">{% endif %}
+          {% if section.settings.silhouette_image != blank %}
+            <img src="{{ section.settings.silhouette_image | image_url: width: 800 }}" alt="男女シルエット" loading="lazy">
+          {% endif %}
         </div>
       </div>
     </section>
 
-    <section class="per-reading-universe" data-per-universe hidden>
-      <h2>宇宙盤・行動領域診断</h2><canvas id="per-reading-radar-{{ sid }}" width="340" height="340"></canvas>
+    <section class="per-reading-universe per-reading-glass-dark" data-per-universe hidden>
+      <h2>宇宙盤・行動領域診断</h2>
+      <p>6領域バランスを可視化し、今の開運アクションを提示します。</p>
+      <canvas id="per-reading-radar-{{ sid }}" width="340" height="340" data-per-radar></canvas>
     </section>
 
     <section class="per-reading-menu per-reading-glass">
       <h2>鑑定メニュー</h2>
       <div class="per-reading-grid5">
         {% for i in (1..5) %}
-          {% assign t = 'menu_title_' | append: i %}{% assign p = 'menu_price_' | append: i %}{% assign l = 'menu_link_' | append: i %}
-          <a class="per-reading-card" href="{{ section.settings[l] }}"><h3>{{ section.settings[t] }}</h3><p>{{ section.settings[p] }}</p></a>
+          {% assign t = 'menu_title_' | append: i %}
+          {% assign p = 'menu_price_' | append: i %}
+          {% assign l = 'menu_link_' | append: i %}
+          <a class="per-reading-card per-reading-price" href="{{ section.settings[l] }}">
+            <h3>{{ section.settings[t] }}</h3>
+            <p>{{ section.settings[p] }}</p>
+          </a>
         {% endfor %}
       </div>
     </section>
 
-    <section class="per-reading-share per-reading-glass"><h2>SNS共有</h2><div class="per-reading-sharebtns"><button data-per-share="line">LINE</button><button data-per-share="x">X</button><button data-per-share="instagram">Instagram</button><button data-per-copy>コピー</button></div></section>
-    <footer class="per-reading-foot per-reading-glass-soft"><h3>PER Reading</h3><p>{{ section.settings.footer_text }}</p><small>本鑑定は娯楽・自己理解を目的としたコンテンツです。</small></footer>
+    <section class="per-reading-products per-reading-glass">
+      <h2>おすすめ商品</h2>
+      <div class="per-reading-grid3">
+        {% for i in (1..3) %}
+          {% assign product_setting = 'featured_product_' | append: i %}
+          {% assign product = section.settings[product_setting] %}
+          {% if product != blank %}
+            <article class="per-reading-card per-reading-product">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" loading="lazy">
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              <p>{{ product.price | money }}</p>
+              <a class="per-reading-btn per-reading-btn--gold" href="{{ product.url }}">詳細を見る</a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="per-reading-share per-reading-glass">
+      <h2>SNS共有</h2>
+      <div class="per-reading-sharebtns">
+        <button data-per-share="line">LINE</button>
+        <button data-per-share="x">X</button>
+        <button data-per-share="instagram">Instagram</button>
+        <button data-per-copy>リンクをコピー</button>
+      </div>
+    </section>
+
+    <footer class="per-reading-foot per-reading-glass-soft">
+      <h3>PER Reading</h3>
+      <p>{{ section.settings.footer_text }}</p>
+      <small>本鑑定は娯楽・自己理解を目的としたコンテンツです。</small>
+    </footer>
   </div>
 </section>
 
 <style>
-#per-reading-{{ sid }}{background:radial-gradient(circle at 10% 5%,#fff 0,#f4edff 40%,#f8eff7 68%,#fdfaf5 100%);padding:40px 0;color:#2f2040}
-#per-reading-{{ sid }} .per-reading-shell{display:grid;gap:20px}.per-reading-glass{background:rgba(255,255,255,.62);backdrop-filter:blur(16px);border:1px solid rgba(215,180,255,.4);border-radius:28px;padding:24px;box-shadow:0 12px 36px rgba(78,45,108,.11)}
-#per-reading-{{ sid }} .per-reading-glass-soft{background:rgba(255,255,255,.5);border:1px solid rgba(215,180,255,.32);border-radius:22px;padding:18px}
-#per-reading-{{ sid }} h1,#per-reading-{{ sid }} h2,#per-reading-{{ sid }} h3{margin:.2em 0 .5em}#per-reading-{{ sid }} .per-reading-hero{display:grid;gap:16px}
-#per-reading-{{ sid }} .per-reading-kicker{color:#9c79bf;letter-spacing:.1em}.per-reading-btn{border:0;border-radius:999px;padding:11px 18px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-#per-reading-{{ sid }} .per-reading-btn--gold{background:linear-gradient(135deg,#fff5cc,#f5d28f,#f8e7f6)}
-#per-reading-{{ sid }} .per-reading-btn--pink{background:linear-gradient(135deg,#ffe2f1,#efd2ff)}
-#per-reading-{{ sid }} .per-reading-btn--line{background:#fff;border:1px solid #d9c1f8}.per-reading-grid4,.per-reading-grid2,.per-reading-grid5{display:grid;gap:12px}
-#per-reading-{{ sid }} .per-reading-formrow{display:grid;gap:10px}#per-reading-{{ sid }} input,#per-reading-{{ sid }} select{width:100%;padding:10px;border:1px solid #dbc6f6;border-radius:12px;background:#fff}
-#per-reading-{{ sid }} .per-reading-progress{height:8px;background:#eddffb;border-radius:99px;overflow:hidden}#per-reading-{{ sid }} .per-reading-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ca9eff,#f6cb92)}
-#per-reading-{{ sid }} .per-reading-score{font-size:2.4rem;font-weight:800;color:#8a5ab7}.per-reading-card{background:rgba(255,255,255,.82);border-radius:18px;padding:16px;border:1px solid #ead9ff}.per-reading-card--paper{background:linear-gradient(180deg,#fffaf0,#fff)}
-#per-reading-{{ sid }} .per-reading-universe{background:radial-gradient(circle at 50% 10%,#1d2954 0,#0f1738 100%);color:#fff;border-radius:28px;padding:24px;text-align:center}
-#per-reading-{{ sid }} .per-reading-sharebtns{display:flex;gap:10px;flex-wrap:wrap}#per-reading-{{ sid }} .per-reading-sharebtns button{border:1px solid #d8c3f2;background:#fff;padding:8px 14px;border-radius:999px}
-@media(min-width:990px){#per-reading-{{ sid }} .per-reading-hero{grid-template-columns:1fr 1fr .8fr;align-items:center}.per-reading-grid4{grid-template-columns:repeat(4,1fr)}.per-reading-grid2{grid-template-columns:repeat(2,1fr)}.per-reading-grid5{grid-template-columns:repeat(5,1fr)}.per-reading-formrow{grid-template-columns:repeat(3,1fr)}}
+#per-reading-{{ sid }}{position:relative;overflow:hidden;background:radial-gradient(circle at 10% 5%,#ffffff 0,#f8f2ff 40%,#fdeff8 72%,#fffdf8 100%);padding:26px 0 48px;color:#2f2040}
+#per-reading-{{ sid }} .per-reading-bg-orb{position:absolute;border-radius:50%;filter:blur(4px);pointer-events:none}
+#per-reading-{{ sid }} .per-reading-bg-orb--a{width:180px;height:180px;background:radial-gradient(circle,#f2cfff 0,rgba(242,207,255,.05) 70%);top:-30px;left:-40px}
+#per-reading-{{ sid }} .per-reading-bg-orb--b{width:220px;height:220px;background:radial-gradient(circle,#ffe9f5 0,rgba(255,233,245,.04) 70%);right:-60px;top:120px}
+#per-reading-{{ sid }} .per-reading-bg-orb--c{width:220px;height:220px;background:radial-gradient(circle,#fce8b7 0,rgba(252,232,183,.05) 72%);left:38%;bottom:-80px}
+#per-reading-{{ sid }} .per-reading-shell{position:relative;display:grid;gap:16px;z-index:2}
+#per-reading-{{ sid }} .per-reading-glass{background:rgba(255,255,255,.64);backdrop-filter:blur(16px);border:1px solid rgba(227,196,255,.42);border-radius:24px;padding:18px;box-shadow:0 10px 36px rgba(111,73,144,.11)}
+#per-reading-{{ sid }} .per-reading-glass-soft{background:rgba(255,255,255,.56);border:1px solid rgba(227,196,255,.35);border-radius:20px;padding:16px}
+#per-reading-{{ sid }} .per-reading-glass-dark{background:linear-gradient(180deg,#2a2452 0,#131735 100%);color:#fff;border:1px solid rgba(246,218,255,.24);border-radius:24px;padding:18px;text-align:center}
+#per-reading-{{ sid }} h1,#per-reading-{{ sid }} h2,#per-reading-{{ sid }} h3{margin:.2em 0 .5em}
+#per-reading-{{ sid }} h1{font-size:clamp(1.65rem,5vw,2.4rem);line-height:1.25}
+#per-reading-{{ sid }} .per-reading-kicker{font-size:.78rem;letter-spacing:.16em;color:#9e74c5;text-transform:uppercase}
+#per-reading-{{ sid }} .per-reading-subtitle{color:#5b4970;line-height:1.8}
+#per-reading-{{ sid }} .per-reading-chiprow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 14px}
+#per-reading-{{ sid }} .per-reading-chip{font-size:.74rem;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.88);border:1px solid #e8d2ff;color:#6e5390}
+#per-reading-{{ sid }} .per-reading-btn{border:0;border-radius:999px;padding:12px 18px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s transform,.2s opacity}
+#per-reading-{{ sid }} .per-reading-btn:hover{transform:translateY(-1px);opacity:.96}
+#per-reading-{{ sid }} .per-reading-btn--gold{background:linear-gradient(135deg,#fff8d8,#f2d08b,#f8e6f5);color:#3b2a47}
+#per-reading-{{ sid }} .per-reading-btn--pink{background:linear-gradient(135deg,#ffe7f3,#edd8ff);color:#402d52}
+#per-reading-{{ sid }} .per-reading-btn--line{background:rgba(255,255,255,.95);border:1px solid #dbc1f8;color:#4f3b65}
+#per-reading-{{ sid }} .per-reading-hero{display:grid;gap:12px}
+#per-reading-{{ sid }} .per-reading-hero__ctas{display:flex;gap:10px;flex-wrap:wrap}
+#per-reading-{{ sid }} .per-reading-mini{font-size:.9rem;line-height:1.8;color:#5c4a72;text-align:center}
+#per-reading-{{ sid }} .per-reading-headline p{margin:0;color:#645278}
+#per-reading-{{ sid }} .per-reading-formrow{display:grid;gap:10px;margin-top:10px}
+#per-reading-{{ sid }} input,#per-reading-{{ sid }} select{width:100%;padding:12px;border:1px solid #e0c8fc;border-radius:12px;background:#fff;color:#3d2f4b}
+#per-reading-{{ sid }} .per-reading-question-card{margin-top:12px;background:rgba(255,255,255,.84);border:1px solid #ead8ff;border-radius:16px;padding:12px}
+#per-reading-{{ sid }} .per-reading-question{font-weight:700;line-height:1.8;margin-bottom:10px}
+#per-reading-{{ sid }} .per-reading-ab{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#per-reading-{{ sid }} [data-per-answer].is-selected{box-shadow:0 0 0 2px #c79bff inset;background:#f9f1ff}
+#per-reading-{{ sid }} .per-reading-progress{margin-top:12px;height:8px;background:#f1e6fd;border-radius:999px;overflow:hidden}
+#per-reading-{{ sid }} .per-reading-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ca9eff,#f8cf9d)}
+#per-reading-{{ sid }} .per-reading-next{margin-top:12px;width:100%}
+#per-reading-{{ sid }} .per-reading-feedback{margin:.65rem 0 0;color:#8a2f60;font-weight:600;font-size:.88rem}
+#per-reading-{{ sid }} .per-reading-grid2,#per-reading-{{ sid }} .per-reading-grid3,#per-reading-{{ sid }} .per-reading-grid5{display:grid;gap:10px}
+#per-reading-{{ sid }} .per-reading-card{background:rgba(255,255,255,.85);border-radius:16px;padding:14px;border:1px solid #eddfff}
+#per-reading-{{ sid }} .per-reading-card--paper{background:linear-gradient(180deg,#fff9ef,#fff)}
+#per-reading-{{ sid }} .per-reading-score{font-size:2.2rem;font-weight:800;color:#8a5ab7}
+#per-reading-{{ sid }} .per-reading-price p{font-size:1.2rem;font-weight:800;color:#6a4a8e}
+#per-reading-{{ sid }} .per-reading-product img{width:100%;height:auto;border-radius:12px;margin-bottom:10px}
+#per-reading-{{ sid }} .per-reading-sil img{max-width:100%;height:auto;border-radius:14px}
+#per-reading-{{ sid }} .per-reading-sharebtns{display:flex;gap:8px;flex-wrap:wrap}
+#per-reading-{{ sid }} .per-reading-sharebtns button{border:1px solid #dcc7f7;background:#fff;padding:9px 14px;border-radius:999px;color:#543f6f}
+
+@media(min-width:990px){
+  #per-reading-{{ sid }}{padding:38px 0 64px}
+  #per-reading-{{ sid }} .per-reading-hero{grid-template-columns:1.1fr 1fr .85fr;align-items:center;gap:14px}
+  #per-reading-{{ sid }} .per-reading-formrow{grid-template-columns:repeat(3,1fr)}
+  #per-reading-{{ sid }} .per-reading-grid2{grid-template-columns:repeat(2,1fr)}
+  #per-reading-{{ sid }} .per-reading-grid3{grid-template-columns:repeat(3,1fr)}
+  #per-reading-{{ sid }} .per-reading-grid5{grid-template-columns:repeat(5,1fr)}
+}
 </style>
 
-<script>
-(()=>{const sid='{{ sid }}';const qEl=document.querySelector('#per-reading-'+sid+' [data-per-question]');if(!qEl)return;
-const stems=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];const branches=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
-const questions=[{q:'恋愛で重視するのは？',A:'安定',B:'刺激'},{q:'決断の速度は？',A:'慎重',B:'直感'},{q:'仕事スタイルは？',A:'段取り',B:'突破'},{q:'疲れた時は？',A:'一人時間',B:'誰かに相談'},{q:'理想の関係は？',A:'信頼継続',B:'共鳴成長'}];
-const types={AA:{title:'静心調和型',feature:'特徴：安心を育てる共感力',strength:'強み：信頼形成・継続力',caution:'注意点：慎重すぎる停滞'},AB:{title:'月光創造型',feature:'特徴：柔らかい革新性',strength:'強み：変化適応',caution:'注意点：感情の振れ幅'},BA:{title:'陽炎推進型',feature:'特徴：行動先行の実行力',strength:'強み：突破力',caution:'注意点：対話不足'},BB:{title:'天麗共鳴型',feature:'特徴：惹きつける華やかさ',strength:'強み：魅力拡散',caution:'注意点：持続設計'}};
-const PAIR_TEXTS={'子-巳':{type:'すれ違い型',comment:'惹かれるが距離調整が鍵。'},'卯-巳':{type:'補完信頼型',comment:'違いが支え合いに変わる。'},'午-酉':{type:'すれ違い型',comment:'価値観のすり合わせが重要。'},'丑-卯':{type:'静かな共存型',comment:'静かな安心を育てる相性。'}};
-let idx=0,ans=[];const setQ=()=>{qEl.textContent=questions[idx]?`${idx+1}. ${questions[idx].q}`:'回答完了。次へで結果表示';document.querySelector('#per-reading-'+sid+' [data-per-progress]').style.width=((idx/questions.length)*100)+'%';};setQ();
-let selected='A';document.querySelectorAll('#per-reading-'+sid+' [data-per-answer]').forEach(b=>b.onclick=()=>selected=b.dataset.perAnswer);
-document.querySelector('#per-reading-'+sid+' [data-per-next]').onclick=()=>{if(idx<questions.length){ans[idx]=selected;idx++;setQ();if(idx===questions.length)render();}};
-document.querySelector('#per-reading-'+sid+' [data-per-start]').onclick=()=>document.getElementById('per-reading-diagnosis-'+sid).scrollIntoView({behavior:'smooth'});
-function kanshiNum(d){const base=new Date('1900-01-01');const diff=Math.floor((d-base)/86400000);return ((diff%60)+60)%60+1;}function labelByNum(n){return stems[(n-1)%10]+branches[(n-1)%12];}
-function render(){const self=document.querySelector('#per-reading-'+sid+' [data-per-self-dob]').value;const partner=document.querySelector('#per-reading-'+sid+' [data-per-partner-dob]').value;if(!self||!partner)return;const n1=kanshiNum(new Date(self)),n2=kanshiNum(new Date(partner));const b1=branches[(n1-1)%12],b2=branches[(n2-1)%12];const key=(ans[0]||'A')+(ans[1]||'A');const t=types[key]||types.AA;const pair=PAIR_TEXTS[`${b1}-${b2}`]||{type:'努力成長型',comment:'歩み寄りで伸びる関係。'};
-const score=Math.max(55,100-Math.abs(n1-n2));const root='#per-reading-'+sid+' ';document.querySelector(root+'[data-per-result]').hidden=false;document.querySelector(root+'[data-per-compat]').hidden=false;document.querySelector(root+'[data-per-universe]').hidden=false;
-(document.querySelector(root+'[data-per-type-title]')).textContent=t.title;(document.querySelector(root+'[data-per-type-feature]')).textContent=t.feature;(document.querySelector(root+'[data-per-type-strength]')).textContent=t.strength;(document.querySelector(root+'[data-per-type-caution]')).textContent=t.caution;
-document.querySelector(root+'[data-per-report]').textContent=`あなたの日干支は${labelByNum(n1)}、お相手は${labelByNum(n2)}。${pair.type}の傾向。`;
-document.querySelector(root+'[data-per-compat-score]').textContent=score+'点';document.querySelector(root+'[data-per-compat-type]').textContent=pair.type;document.querySelector(root+'[data-per-compat-text]').textContent=pair.comment;drawCircle(n1);drawRadar([score,78,84,72,88,80]);}
-function drawCircle(active){const c=document.getElementById('per-reading-circle-'+sid);if(!c)return;const x=c.getContext('2d');const cx=180,cy=180,r=145;x.clearRect(0,0,360,360);for(let i=1;i<=60;i++){const a=(Math.PI*2/60)*i-Math.PI/2;const px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r;x.fillStyle=i===active?'#c793ff':'#7d5ea0';x.beginPath();x.arc(px,py,i===active?5:2.5,0,Math.PI*2);x.fill();if(i%5===0){x.fillStyle='#5f4a7c';x.font='11px sans-serif';x.fillText(String(i),cx+Math.cos(a)*(r+16)-6,cy+Math.sin(a)*(r+16)+4);}}}
-function drawRadar(vals){const c=document.getElementById('per-reading-radar-'+sid);if(!c)return;const g=c.getContext('2d');const labs=['仕事','恋愛','人間関係','未来','学び','魅力'],cx=170,cy=170,max=130;g.clearRect(0,0,340,340);for(let l=1;l<=5;l++){g.strokeStyle='rgba(255,255,255,.2)';g.beginPath();for(let i=0;i<6;i++){const a=(Math.PI*2/6)*i-Math.PI/2,rr=max*l/5,px=cx+Math.cos(a)*rr,py=cy+Math.sin(a)*rr;i?g.lineTo(px,py):g.moveTo(px,py);}g.closePath();g.stroke();}
-g.fillStyle='rgba(203,154,255,.45)';g.beginPath();vals.forEach((v,i)=>{const a=(Math.PI*2/6)*i-Math.PI/2,rr=max*(v/100),px=cx+Math.cos(a)*rr,py=cy+Math.sin(a)*rr;i?g.lineTo(px,py):g.moveTo(px,py);});g.closePath();g.fill();g.fillStyle='#fff';labs.forEach((t,i)=>{const a=(Math.PI*2/6)*i-Math.PI/2;g.fillText(t,cx+Math.cos(a)*(max+18)-10,cy+Math.sin(a)*(max+18));});}
-})();
-</script>
+{{ 'per-reading-app.js' | asset_url | script_tag }}
 
 {% schema %}
 {
@@ -142,6 +232,9 @@ g.fillStyle='rgba(203,154,255,.45)';g.beginPath();vals.forEach((v,i)=>{const a=(
     {"type":"url","id":"primary_button_link","label":"Primary button link"},
     {"type":"text","id":"secondary_button_label","label":"Secondary button label","default":"診断の仕組みを見る"},
     {"type":"image_picker","id":"silhouette_image","label":"Couple silhouette image"},
+    {"type":"product","id":"featured_product_1","label":"Featured product 1"},
+    {"type":"product","id":"featured_product_2","label":"Featured product 2"},
+    {"type":"product","id":"featured_product_3","label":"Featured product 3"},
     {"type":"text","id":"menu_title_1","label":"Menu 1 title","default":"詳細PER鑑定書"},
     {"type":"text","id":"menu_price_1","label":"Menu 1 price","default":"¥4,980"},
     {"type":"url","id":"menu_link_1","label":"Menu 1 link"},
