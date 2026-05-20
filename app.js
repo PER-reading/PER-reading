@@ -5,6 +5,7 @@ const personB = document.getElementById("personB");
 const result = document.getElementById("result");
 const diagnoseBtn = document.getElementById("diagnoseBtn");
 const scoreValue = document.getElementById("scoreValue");
+const scoreGauge = document.getElementById("scoreGauge");
 
 let kanshiList = [];
 
@@ -46,6 +47,7 @@ function diagnose() {
   if (!a || !b) {
     result.textContent = "選択値が不正です。";
     scoreValue.textContent = "--";
+    scoreGauge.style.setProperty("--score", 0);
     return;
   }
 
@@ -55,6 +57,7 @@ function diagnose() {
   const score = calcScore(cyclicalDiff);
 
   scoreValue.textContent = `${score}`;
+  scoreGauge.style.setProperty("--score", score);
   result.innerHTML = `
     <strong>${a.kanshi}</strong> × <strong>${b.kanshi}</strong><br>
     差分: ${diff}（60循環上の最短差: ${cyclicalDiff}）<br>
