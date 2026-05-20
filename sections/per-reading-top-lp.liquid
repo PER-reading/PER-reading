@@ -8,29 +8,43 @@
 
   <div class="per-lp__inner page-width">
     <header class="per-lp__hero">
-      {% if section.settings.eyebrow != blank %}
-        <p class="per-lp__eyebrow">{{ section.settings.eyebrow }}</p>
-      {% endif %}
-
-      <h1 class="per-lp__title">{{ section.settings.title }}</h1>
-
-      {% if section.settings.subtitle != blank %}
-        <p class="per-lp__subtitle">{{ section.settings.subtitle }}</p>
-      {% endif %}
-
-      <div class="per-lp__cta-wrap">
-        {% if section.settings.primary_button_label != blank and section.settings.primary_button_link != blank %}
-          <a href="{{ section.settings.primary_button_link }}" class="per-lp__button per-lp__button--primary">
-            {{ section.settings.primary_button_label }}
-          </a>
+      <div class="per-lp__hero-kirakira" aria-hidden="true"></div>
+      <div class="per-lp__hero-content">
+        {% if section.settings.eyebrow != blank %}
+          <p class="per-lp__eyebrow">{{ section.settings.eyebrow }}</p>
         {% endif %}
 
-        {% if section.settings.secondary_button_label != blank and section.settings.secondary_button_link != blank %}
-          <a href="{{ section.settings.secondary_button_link }}" class="per-lp__button per-lp__button--ghost">
-            {{ section.settings.secondary_button_label }}
-          </a>
+        <h1 class="per-lp__title">{{ section.settings.title }}</h1>
+
+        {% if section.settings.subtitle != blank %}
+          <p class="per-lp__subtitle">{{ section.settings.subtitle }}</p>
         {% endif %}
+
+        <div class="per-lp__cta-wrap">
+          {% if section.settings.primary_button_label != blank and section.settings.primary_button_link != blank %}
+            <a href="{{ section.settings.primary_button_link }}" class="per-lp__button per-lp__button--primary">
+              {{ section.settings.primary_button_label }}
+            </a>
+          {% endif %}
+
+          {% if section.settings.secondary_button_label != blank and section.settings.secondary_button_link != blank %}
+            <a href="{{ section.settings.secondary_button_link }}" class="per-lp__button per-lp__button--ghost">
+              {{ section.settings.secondary_button_label }}
+            </a>
+          {% endif %}
+        </div>
       </div>
+
+      {% if section.settings.hero_couple_image != blank %}
+        <img
+          class="per-lp__hero-couple"
+          src="{{ section.settings.hero_couple_image | image_url: width: 800 }}"
+          alt=""
+          loading="lazy"
+          width="480"
+          height="640"
+        >
+      {% endif %}
     </header>
 
     <div class="per-lp__diagnosis" id="diagnosis-{{ section.id }}">
@@ -74,17 +88,21 @@
 <style>
   #per-lp-{{ section.id }} {
     --per-bg: radial-gradient(100% 140% at 0% 0%, #6e5ba7 0%, #34254f 55%, #1e1630 100%);
-    --per-card: rgba(255, 255, 255, 0.06);
+    --per-card: rgba(255, 255, 255, 0.08);
     --per-line: rgba(245, 215, 132, 0.36);
     --per-gold: #f5d784;
-    --per-gold-deep: #c79d41;
     --per-lavender: #d9c8ff;
     --per-text: #f8f4ff;
     --per-text-muted: #dfd4f4;
 
     position: relative;
     overflow: hidden;
-    background: var(--per-bg);
+    background:
+      linear-gradient(125deg, rgba(22, 15, 35, 0.66), rgba(18, 10, 30, 0.9)),
+      {% if section.settings.hero_bg_image != blank %}
+        url('{{ section.settings.hero_bg_image | image_url: width: 2400 }}') center / cover no-repeat,
+      {% endif %}
+      var(--per-bg);
     color: var(--per-text);
     padding: 40px 0 56px;
   }
@@ -100,11 +118,53 @@
   #per-lp-{{ section.id }} .per-lp__diagnosis,
   #per-lp-{{ section.id }} .per-lp__offer {
     background: var(--per-card);
-    backdrop-filter: blur(7px);
-    border: 1px solid var(--per-line);
+    backdrop-filter: blur(14px) saturate(130%);
+    border: 1px solid rgba(245, 215, 132, 0.35);
     border-radius: 18px;
     padding: 22px;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(176, 142, 255, 0.16);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__hero::before,
+  #per-lp-{{ section.id }} .per-lp__diagnosis::before,
+  #per-lp-{{ section.id }} .per-lp__offer::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__hero {
+    display: grid;
+    gap: 18px;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__hero-content,
+  #per-lp-{{ section.id }} .per-lp__hero-couple {
+    position: relative;
+    z-index: 1;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__hero-couple {
+    width: min(220px, 58vw);
+    justify-self: end;
+    align-self: end;
+    opacity: 0.9;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+    animation: perFloat 6s ease-in-out infinite;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__hero-kirakira {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 12% 22%, rgba(255, 229, 161, 0.22) 0 2px, transparent 2px), radial-gradient(circle at 82% 18%, rgba(216, 191, 255, 0.25) 0 2px, transparent 2px), radial-gradient(circle at 74% 72%, rgba(255, 233, 171, 0.2) 0 2px, transparent 2px);
+    opacity: 0.75;
+    pointer-events: none;
+    animation: perTwinkle 5s ease-in-out infinite alternate;
   }
 
   #per-lp-{{ section.id }} .per-lp__eyebrow {
@@ -118,7 +178,7 @@
     margin: 10px 0 12px;
     font-size: clamp(2.7rem, 10vw, 4.4rem);
     line-height: 1.25;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
   }
 
   #per-lp-{{ section.id }} .per-lp__subtitle,
@@ -149,30 +209,32 @@
     text-decoration: none;
     font-weight: 700;
     letter-spacing: 0.03em;
-    transition: transform 180ms ease, opacity 180ms ease, box-shadow 180ms ease;
+    transition: transform 220ms ease, opacity 220ms ease, box-shadow 220ms ease;
+    position: relative;
   }
 
   #per-lp-{{ section.id }} .per-lp__button:hover {
     transform: translateY(-2px);
-    opacity: 0.95;
+    opacity: 0.97;
   }
 
   #per-lp-{{ section.id }} .per-lp__button--primary {
-    color: #24183b;
-    background: linear-gradient(145deg, #f9e6a7, var(--per-gold-deep));
-    box-shadow: 0 8px 18px rgba(204, 160, 65, 0.32);
+    color: #fdf8ff;
+    background: linear-gradient(122deg, #f0b9ff 0%, #f8d989 48%, #d992ff 100%);
+    box-shadow: 0 0 0 1px rgba(255, 244, 210, 0.5), 0 14px 26px rgba(243, 170, 255, 0.35), 0 0 26px rgba(255, 233, 166, 0.45);
+    text-shadow: 0 1px 2px rgba(62, 20, 88, 0.4);
   }
 
   #per-lp-{{ section.id }} .per-lp__button--ghost {
     color: var(--per-lavender);
     border-color: rgba(217, 200, 255, 0.6);
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.05);
   }
 
   #per-lp-{{ section.id }} .per-lp__button--gold {
-    color: #231530;
-    background: linear-gradient(140deg, #fff2c4, #d4a444);
-    box-shadow: 0 8px 24px rgba(220, 176, 76, 0.34);
+    color: #2e1a41;
+    background: linear-gradient(130deg, #fff4cf 0%, #f7cf7a 40%, #f2adff 100%);
+    box-shadow: 0 0 0 1px rgba(255, 241, 205, 0.46), 0 12px 24px rgba(231, 180, 90, 0.35), 0 0 30px rgba(241, 194, 255, 0.38);
   }
 
   #per-lp-{{ section.id }} .per-lp__button--full {
@@ -203,7 +265,7 @@
     padding: 12px;
     border-radius: 14px;
     border: 1px solid rgba(245, 215, 132, 0.25);
-    background: rgba(27, 20, 40, 0.42);
+    background: rgba(27, 20, 40, 0.45);
   }
 
   #per-lp-{{ section.id }} .per-lp__step-number {
@@ -229,6 +291,19 @@
     font-weight: 600;
   }
 
+  #per-lp-{{ section.id }} .per-lp__diagnosis::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      {% if section.settings.diagnosis_bg_symbol != blank %}
+        url('{{ section.settings.diagnosis_bg_symbol | image_url: width: 1200 }}') center 60% / min(72%, 360px) no-repeat,
+      {% endif %}
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 65%);
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
   #per-lp-{{ section.id }} .per-lp__bg-glow {
     position: absolute;
     width: 250px;
@@ -251,6 +326,16 @@
     background: #ffd77b;
   }
 
+  @keyframes perFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes perTwinkle {
+    0% { opacity: 0.5; filter: blur(0); }
+    100% { opacity: 0.9; filter: blur(1px); }
+  }
+
   @media screen and (min-width: 750px) {
     #per-lp-{{ section.id }} {
       padding: 72px 0;
@@ -264,9 +349,53 @@
         "offer diagnosis";
     }
 
-    #per-lp-{{ section.id }} .per-lp__hero { grid-area: hero; }
+    #per-lp-{{ section.id }} .per-lp__hero {
+      grid-area: hero;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
     #per-lp-{{ section.id }} .per-lp__diagnosis { grid-area: diagnosis; }
     #per-lp-{{ section.id }} .per-lp__offer { grid-area: offer; }
+
+    #per-lp-{{ section.id }} .per-lp__hero-couple {
+      width: min(270px, 26vw);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #per-lp-{{ section.id }} {
+      padding: 28px 0 46px;
+    }
+
+    #per-lp-{{ section.id }} .per-lp__hero,
+    #per-lp-{{ section.id }} .per-lp__diagnosis,
+    #per-lp-{{ section.id }} .per-lp__offer {
+      padding: 18px;
+      border-radius: 16px;
+    }
+
+    #per-lp-{{ section.id }} .per-lp__title {
+      font-size: clamp(2.2rem, 9vw, 3.3rem);
+      line-height: 1.35;
+    }
+
+    #per-lp-{{ section.id }} .per-lp__subtitle,
+    #per-lp-{{ section.id }} .per-lp__section-text,
+    #per-lp-{{ section.id }} .per-lp__offer-text,
+    #per-lp-{{ section.id }} .per-lp__step-text {
+      font-size: 1.35rem;
+      line-height: 1.72;
+    }
+
+    #per-lp-{{ section.id }} .per-lp__cta-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    #per-lp-{{ section.id }} .per-lp__button {
+      width: 100%;
+      min-height: 48px;
+    }
   }
 </style>
 
@@ -280,6 +409,8 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PER Reading | Premium Love Divination" },
     { "type": "text", "id": "title", "label": "Title", "default": "縁の糸を読み解く、高級恋愛鑑定" },
     { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "和の叡智とスピリチュアルリーディングで、あなたの恋の転機を静かに映し出します。" },
+    { "type": "image_picker", "id": "hero_bg_image", "label": "Hero background image" },
+    { "type": "image_picker", "id": "hero_couple_image", "label": "Hero right image (couple silhouette)" },
 
     { "type": "text", "id": "primary_button_label", "label": "Primary button label", "default": "今すぐ鑑定を始める" },
     { "type": "url", "id": "primary_button_link", "label": "Primary button link" },
@@ -288,6 +419,7 @@
 
     { "type": "text", "id": "diagnosis_heading", "label": "Diagnosis heading", "default": "3分でわかる恋愛相性診断" },
     { "type": "textarea", "id": "diagnosis_text", "label": "Diagnosis text", "default": "生年月日と今の想いを入力するだけ。あなたの恋が進む道筋を、淡く神秘的な言葉でお届けします。" },
+    { "type": "image_picker", "id": "diagnosis_bg_symbol", "label": "Diagnosis background symbol image" },
     { "type": "text", "id": "diagnosis_button_label", "label": "Diagnosis CTA label", "default": "無料診断を試す" },
     { "type": "url", "id": "diagnosis_button_link", "label": "Diagnosis CTA link" },
 
