@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="sky-decor" aria-hidden="true">
+      <span class="moon"></span>
+      <span class="spark s1">✦</span><span class="spark s2">✧</span><span class="spark s3">✦</span>
+      <span class="spark s4">✧</span><span class="spark s5">✦</span><span class="spark s6">✧</span>
+    </div>
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
     <div class="bg-orb orb-3"></div>
@@ -19,11 +24,13 @@
 
       <div class="hero-visual glass-card">
         <div class="zodiac-wheel" aria-hidden="true">
+          <div class="wheel-glow"></div>
           <div class="wheel-ring"></div>
           <div class="wheel-core">PER</div>
           <span class="star star-a">✦</span>
           <span class="star star-b">✧</span>
           <span class="star star-c">✦</span>
+          <span class="star star-d">✧</span>
         </div>
         <div class="silhouette-wrap" aria-hidden="true">
           <div class="silhouette silhouette-left"></div>
@@ -34,24 +41,6 @@
     </header>
 
     <main class="container">
-      <section class="content-section">
-        <h2>PER占いでわかること</h2>
-        <div class="card-grid three">
-          <article class="glass-card info-card"><h3>関係性の土台</h3><p>同一型・同支連動型など、二人の相性タイプを判定。</p></article>
-          <article class="glass-card info-card"><h3>距離感のクセ</h3><p>60循環上の差分をもとに、噛み合いやすさを可視化。</p></article>
-          <article class="glass-card info-card"><h3>関係改善のヒント</h3><p>相手理解を深めるための観点をシンプルに提示します。</p></article>
-        </div>
-      </section>
-
-      <section class="content-section">
-        <h2>無料診断の流れ</h2>
-        <div class="card-grid flow-grid">
-          <article class="glass-card flow-card"><span>01</span><p>二人の干支番号を選択</p></article>
-          <article class="glass-card flow-card"><span>02</span><p>「診断する」をタップ</p></article>
-          <article class="glass-card flow-card"><span>03</span><p>相性タイプとスコアを確認</p></article>
-        </div>
-      </section>
-
       <section class="content-section" id="diagnosis">
         <h2>無料相性診断</h2>
         <section class="glass-card form-card">
@@ -71,7 +60,12 @@
           <h3>診断結果</h3>
           <div class="score-wrap">
             <p class="score-label">Compatibility Score</p>
-            <p class="score-value" id="scoreValue">--</p>
+            <div class="score-gauge" id="scoreGauge" style="--score:0">
+              <div class="gauge-inner">
+                <p class="score-value" id="scoreValue">--</p>
+                <small>POINT</small>
+              </div>
+            </div>
           </div>
           <div id="result">データ読み込み後に「診断する」を押してください。</div>
         </section>
@@ -80,9 +74,9 @@
       <section class="content-section">
         <h2>鑑定メニュー</h2>
         <div class="card-grid three">
-          <article class="glass-card menu-card"><h3>恋愛相性鑑定</h3><p>価値観・距離感・関係進展のヒントを立体的に解析。</p></article>
-          <article class="glass-card menu-card"><h3>仕事パートナー鑑定</h3><p>役割分担や意思決定の噛み合いをわかりやすく整理。</p></article>
-          <article class="glass-card menu-card"><h3>運気バイオリズム鑑定</h3><p>周期の流れを捉え、行動の最適タイミングを提案。</p></article>
+          <article class="glass-card menu-card"><h3>恋愛相性鑑定</h3><p class="price">¥12,000</p><p>価値観・距離感・関係進展のヒントを立体的に解析。</p></article>
+          <article class="glass-card menu-card"><h3>仕事パートナー鑑定</h3><p class="price">¥15,000</p><p>役割分担や意思決定の噛み合いをわかりやすく整理。</p></article>
+          <article class="glass-card menu-card"><h3>運気バイオリズム鑑定</h3><p class="price">¥18,000</p><p>周期の流れを捉え、行動の最適タイミングを提案。</p></article>
         </div>
       </section>
     </main>
