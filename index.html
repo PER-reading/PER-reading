@@ -7,56 +7,61 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="sky-decor" aria-hidden="true">
-      <span class="moon"></span>
-      <span class="spark s1">✦</span><span class="spark s2">✧</span><span class="spark s3">✦</span>
-      <span class="spark s4">✧</span><span class="spark s5">✦</span><span class="spark s6">✧</span>
-    </div>
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
     <div class="bg-orb orb-3"></div>
 
-    <header class="hero container reveal">
-      <div class="hero-image-frame" aria-hidden="true">
-        <div class="hero-overlay"></div>
-      </div>
-      <p class="eyebrow">Premium Esoteric Resonance</p>
-      <h1>PER Reading<br><span>魂の波長を、上品に読み解く。</span></h1>
-      <p class="hero-copy">和風の静謐さとスピリチュアルな余韻を纏った、恋愛相性診断。60干支サイクルをもとに、二人の縁をラグジュアリーな体験で可視化します。</p>
-      <a href="#diagnosis" class="btn-primary">無料で相性を診断する</a>
-
-      <div class="hero-visual glass-card reveal delay-1">
-        <div class="zodiac-wheel" aria-hidden="true">
-          <div class="wheel-glow"></div>
-          <div class="wheel-ring"></div>
-          <div class="wheel-core">PER</div>
-        </div>
-        <div class="silhouette-wrap" aria-hidden="true"></div>
-      </div>
-    </header>
-
     <main class="container">
-      <section class="content-section reveal" id="diagnosis">
-        <h2>無料相性診断</h2>
-        <section class="glass-card form-card reveal delay-1">
-          <h3>診断入力</h3>
-          <div class="form-grid">
-            <label>Person A
-              <select id="personA"></select>
-            </label>
-            <label>Person B
-              <select id="personB"></select>
-            </label>
-          </div>
-          <button id="diagnoseBtn" class="btn-primary">診断する</button>
-        </section>
+      <section class="hero-layout reveal">
+        <article class="hero-panel brand-panel glass-card">
+          <p class="eyebrow">Premium Esoteric Resonance</p>
+          <h1>PER Reading</h1>
+          <p class="brand-sub">心の重心からわかる相性診断</p>
+          <p class="hero-copy">
+            和の静けさとスピリチュアルな余韻を重ねた、上質な診断体験。<br />
+            60干支サイクルを軸に、ふたりの縁と関係性を可視化します。
+          </p>
+          <a href="#diagnosis" class="btn-primary">無料でPER診断をはじめる</a>
+        </article>
 
-        <section class="glass-card result-card reveal delay-2" id="resultCard">
+        <article class="hero-panel visual-panel glass-card" aria-label="メインビジュアル">
+          <img src="hero-bg.png" alt="PER Reading メインビジュアル" class="main-visual" />
+          <div class="visual-glow" aria-hidden="true"></div>
+        </article>
+
+        <article class="hero-panel diagnose-panel glass-card" id="diagnosis">
+          <h2>無料PER診断</h2>
+          <p class="step">3 / 20</p>
+          <section class="question-card">
+            <h3>あなたは人間関係で、どちらに近いですか？</h3>
+            <div class="choice-grid">
+              <button class="choice-btn is-active" type="button">A. 相手を優先する</button>
+              <button class="choice-btn" type="button">B. 自分の意見を伝える</button>
+            </div>
+          </section>
+
+          <section class="input-card">
+            <h3>干支を選択</h3>
+            <div class="form-grid">
+              <label>Person A
+                <select id="personA"></select>
+              </label>
+              <label>Person B
+                <select id="personB"></select>
+              </label>
+            </div>
+            <button id="diagnoseBtn" class="btn-primary">診断する</button>
+          </section>
+        </article>
+      </section>
+
+      <section class="content-section reveal">
+        <section class="glass-card result-card" id="resultCard">
           <h3>診断結果</h3>
           <p class="certificate-sub">Compatibility Authentication</p>
           <div class="score-wrap">
             <p class="score-label">Compatibility Score</p>
-            <div class="score-gauge" id="scoreGauge" style="--score:0">
+            <div class="score-gauge" id="scoreGauge" style="--score: 0">
               <div class="gauge-inner">
                 <p class="score-value" id="scoreValue">--</p>
                 <small>POINT</small>
@@ -66,15 +71,6 @@
           <div id="result">データ読み込み後に「診断する」を押してください。</div>
           <p class="seal">PER 認定印</p>
         </section>
-      </section>
-
-      <section class="content-section reveal">
-        <h2>鑑定メニュー</h2>
-        <div class="card-grid three">
-          <article class="glass-card menu-card reveal delay-1"><h3>恋愛相性鑑定</h3><p class="price">¥12,000</p><p>価値観・距離感・関係進展のヒントを立体的に解析。</p><a href="#" class="menu-cta">この鑑定を予約する</a></article>
-          <article class="glass-card menu-card reveal delay-2"><h3>仕事パートナー鑑定</h3><p class="price">¥15,000</p><p>役割分担や意思決定の噛み合いをわかりやすく整理。</p><a href="#" class="menu-cta">この鑑定を予約する</a></article>
-          <article class="glass-card menu-card reveal delay-3"><h3>運気バイオリズム鑑定</h3><p class="price">¥18,000</p><p>周期の流れを捉え、行動の最適タイミングを提案。</p><a href="#" class="menu-cta">この鑑定を予約する</a></article>
-        </div>
       </section>
     </main>
 
