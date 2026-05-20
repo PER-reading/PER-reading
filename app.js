@@ -56,8 +56,7 @@ function diagnose() {
   const type = relationType(cyclicalDiff);
   const score = calcScore(cyclicalDiff);
 
-  scoreValue.textContent = `${score}`;
-  scoreGauge.style.setProperty("--score", score);
+  animateScore(score);
   result.innerHTML = `
     <strong>${a.kanshi}</strong> × <strong>${b.kanshi}</strong><br>
     差分: ${diff}（60循環上の最短差: ${cyclicalDiff}）<br>
@@ -79,4 +78,31 @@ async function init() {
 }
 
 diagnoseBtn.addEventListener("click", diagnose);
+setupScrollReveal();
 init();
+
+
+function setupScrollReveal() {
+  const els = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.16 });
+  els.forEach((el) => observer.observe(el));
+}
+
+function animateScore(target) {
+  let cur = 0;
+  const step = () => {
+    cur += Math.max(1, Math.ceil((target - cur) / 8));
+    if (cur >= target) cur = target;
+    scoreValue.textContent = `${cur}`;
+    scoreGauge.style.setProperty('--score', cur);
+    if (cur < target) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
