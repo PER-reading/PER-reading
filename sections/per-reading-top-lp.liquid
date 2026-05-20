@@ -1,134 +1,132 @@
-{% comment %}
-  PER Reading Top LP (Dawn compatible)
-{% endcomment %}
-
-<section class="per-lp color-{{ section.settings.color_scheme }}" id="per-lp-{{ section.id }}">
-  <div class="per-lp__bg-glow per-lp__bg-glow--left" aria-hidden="true"></div>
-  <div class="per-lp__bg-glow per-lp__bg-glow--right" aria-hidden="true"></div>
-
-  <div class="per-lp__inner page-width">
-    <header class="per-lp__hero per-lp__panel">
-      <div class="per-lp__hero-kirakira" aria-hidden="true"></div>
-      <div class="per-lp__hero-content">
-        <p class="per-lp__eyebrow">{{ section.settings.eyebrow }}</p>
-        <h1 class="per-lp__title">{{ section.settings.title }}</h1>
-        <p class="per-lp__subtitle">{{ section.settings.subtitle }}</p>
-        <div class="per-lp__cta-wrap">
-          <a href="{{ section.settings.primary_button_link }}" class="per-lp__button per-lp__button--primary">{{ section.settings.primary_button_label }}</a>
-          <a href="{{ section.settings.secondary_button_link }}" class="per-lp__button per-lp__button--ghost">{{ section.settings.secondary_button_label }}</a>
+{% assign sid = section.id %}
+<section id="per-reading-{{ sid }}" class="per-reading-wrap color-{{ section.settings.color_scheme }}">
+  <div class="per-reading-shell page-width">
+    <section class="per-reading-hero per-reading-glass">
+      <div class="per-reading-hero__col per-reading-hero__left">
+        <p class="per-reading-kicker">{{ section.settings.eyebrow }}</p>
+        <h1>{{ section.settings.title }}</h1>
+        <p>{{ section.settings.subtitle }}</p>
+        <div class="per-reading-hero__ctas">
+          <a class="per-reading-btn per-reading-btn--gold" href="{{ section.settings.primary_button_link }}">{{ section.settings.primary_button_label }}</a>
+          <a class="per-reading-btn per-reading-btn--line" href="#per-reading-diagnosis-{{ sid }}">{{ section.settings.secondary_button_label }}</a>
         </div>
       </div>
-      {% if section.settings.hero_couple_image != blank %}
-        <img class="per-lp__hero-couple" src="{{ section.settings.hero_couple_image | image_url: width: 900 }}" alt="" loading="lazy" width="500" height="650">
-      {% endif %}
-    </header>
+      <div class="per-reading-hero__col per-reading-hero__center">
+        <canvas id="per-reading-circle-{{ sid }}" width="360" height="360" aria-label="PER 60干支円"></canvas>
+        <p class="per-reading-mini">60干支円から日干支を表示し、十干・十二支の性質を可視化</p>
+      </div>
+      <aside class="per-reading-hero__col per-reading-hero__right per-reading-glass-soft">
+        <h3>無料PER診断</h3>
+        <p>生年月日と5問の直感質問で、PERタイプ・相性・行動領域を同時分析。</p>
+        <button class="per-reading-btn per-reading-btn--pink" data-per-start>無料診断を開始</button>
+      </aside>
+    </section>
 
-    <section class="per-lp__diagnosis-flow per-lp__panel" id="diagnosis-{{ section.id }}">
-      <h2 class="per-lp__section-title">{{ section.settings.diagnosis_heading }}</h2>
-      <p class="per-lp__section-text">{{ section.settings.diagnosis_text }}</p>
-      <ul class="per-lp__steps" role="list">
-        {% for block in section.blocks %}
-          {% if block.type == 'step' %}
-            <li class="per-lp__step" {{ block.shopify_attributes }}>
-              <span class="per-lp__step-number">{{ forloop.index }}</span>
-              <div>
-                <h3 class="per-lp__step-title">{{ block.settings.title }}</h3>
-                <p class="per-lp__step-text">{{ block.settings.text }}</p>
-              </div>
-            </li>
-          {% endif %}
+    <section class="per-reading-features per-reading-glass">
+      <h2>PER占いでわかること</h2>
+      <div class="per-reading-grid4">
+        <article><h3>恋愛傾向</h3><p>日支と回答傾向から恋愛時の反応・距離感を解析。</p></article>
+        <article><h3>仕事の強み</h3><p>PERタイプと宇宙盤指標を連動し、現実推進力を可視化。</p></article>
+        <article><h3>相性診断</h3><p>位相法・季節位相の相性名とスコアを同時表示。</p></article>
+        <article><h3>運命の流れ</h3><p>現在の行動領域バランスから開運アクションを提示。</p></article>
+      </div>
+    </section>
+
+    <section id="per-reading-diagnosis-{{ sid }}" class="per-reading-diagnosis per-reading-glass">
+      <h2>無料診断UI</h2>
+      <div class="per-reading-formrow">
+        <label>あなたの生年月日<input type="date" data-per-self-dob></label>
+        <label>お相手の生年月日<input type="date" data-per-partner-dob></label>
+        <label>性別<select data-per-gender><option value="female">女性</option><option value="male">男性</option><option value="other">その他</option></select></label>
+      </div>
+      <div class="per-reading-question" data-per-question></div>
+      <div class="per-reading-ab">
+        <button class="per-reading-btn per-reading-btn--line" data-per-answer="A">Aを選択</button>
+        <button class="per-reading-btn per-reading-btn--line" data-per-answer="B">Bを選択</button>
+      </div>
+      <div class="per-reading-progress"><span data-per-progress></span></div>
+      <button class="per-reading-btn per-reading-btn--gold" data-per-next>次へ</button>
+    </section>
+
+    <section class="per-reading-results per-reading-glass" data-per-result hidden>
+      <h2>診断結果</h2>
+      <div class="per-reading-grid2">
+        <article class="per-reading-card">
+          <h3 data-per-type-title>PERタイプ</h3><p data-per-type-feature></p><p data-per-type-strength></p><p data-per-type-caution></p>
+        </article>
+        <article class="per-reading-card per-reading-card--paper">
+          <h3>鑑定書</h3><p data-per-report></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="per-reading-compat per-reading-glass" data-per-compat hidden>
+      <h2>相性診断結果</h2>
+      <div class="per-reading-grid2">
+        <div class="per-reading-card"><p class="per-reading-score" data-per-compat-score></p><h3 data-per-compat-type></h3><p data-per-compat-text></p></div>
+        <div class="per-reading-card per-reading-sil">
+          {% if section.settings.silhouette_image != blank %}<img src="{{ section.settings.silhouette_image | image_url: width: 700 }}" alt="男女シルエット" loading="lazy">{% endif %}
+        </div>
+      </div>
+    </section>
+
+    <section class="per-reading-universe" data-per-universe hidden>
+      <h2>宇宙盤・行動領域診断</h2><canvas id="per-reading-radar-{{ sid }}" width="340" height="340"></canvas>
+    </section>
+
+    <section class="per-reading-menu per-reading-glass">
+      <h2>鑑定メニュー</h2>
+      <div class="per-reading-grid5">
+        {% for i in (1..5) %}
+          {% assign t = 'menu_title_' | append: i %}{% assign p = 'menu_price_' | append: i %}{% assign l = 'menu_link_' | append: i %}
+          <a class="per-reading-card" href="{{ section.settings[l] }}"><h3>{{ section.settings[t] }}</h3><p>{{ section.settings[p] }}</p></a>
         {% endfor %}
-      </ul>
-    </section>
-
-    <section class="per-lp__birthform per-lp__panel">
-      <h2 class="per-lp__section-title">生年月日で運命を読む</h2>
-      <form class="per-lp__form" action="#" method="post" onsubmit="return false;">
-        <label class="per-lp__field"><span>あなたの生年月日</span><input type="date" name="your_birthdate"></label>
-        <label class="per-lp__field"><span>お相手の生年月日</span><input type="date" name="partner_birthdate"></label>
-        <button type="submit" class="per-lp__button per-lp__button--primary per-lp__button--full">{{ section.settings.diagnosis_button_label }}</button>
-      </form>
-    </section>
-
-    <section class="per-lp__compatibility per-lp__panel">
-      <h2 class="per-lp__section-title">相性結果プレビュー</h2>
-      <div class="per-lp__result-cards">
-        <article class="per-lp__result-card"><h3>恋愛シンクロ率</h3><p class="score">89%</p><p>感情の波長が近く、自然体で惹かれ合う関係。</p></article>
-        <article class="per-lp__result-card"><h3>結婚運バランス</h3><p class="score">A+</p><p>価値観の擦り合わせがしやすく、安定した未来像。</p></article>
-        <article class="per-lp__result-card"><h3>運命の転機</h3><p class="score">7月</p><p>対話が深まる季節。関係進展のチャンスが強まります。</p></article>
       </div>
     </section>
 
-    <section class="per-lp__radar per-lp__panel">
-      <h2 class="per-lp__section-title">恋愛エネルギー・レーダー</h2>
-      <div class="per-lp__radar-wrap">
-        <div class="per-lp__radar-chart" aria-hidden="true"></div>
-        <ul class="per-lp__legend" role="list">
-          <li>情熱 92</li><li>信頼 84</li><li>相性 89</li><li>将来性 86</li><li>精神共鳴 90</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="per-lp__pricing per-lp__panel">
-      <h2 class="per-lp__section-title">鑑定メニュー</h2>
-      <div class="per-lp__price-grid">
-        <article class="per-lp__price-card"><p class="plan">Light</p><h3>無料診断</h3><p class="price">¥0</p><p>相性の核を1分でチェック。</p></article>
-        <article class="per-lp__price-card per-lp__price-card--featured"><p class="plan">Premium</p><h3>恋愛成就鑑定</h3><p class="price">¥4,980</p><p>深層心理、時期、行動アドバイス付き。</p></article>
-        <article class="per-lp__price-card"><p class="plan">Royal</p><h3>完全個別セッション</h3><p class="price">¥12,000</p><p>2人の未来地図を丁寧に読み解く特別版。</p></article>
-      </div>
-      <a href="{{ section.settings.offer_button_link }}" class="per-lp__button per-lp__button--gold per-lp__button--full">{{ section.settings.offer_button_label }}</a>
-    </section>
+    <section class="per-reading-share per-reading-glass"><h2>SNS共有</h2><div class="per-reading-sharebtns"><button data-per-share="line">LINE</button><button data-per-share="x">X</button><button data-per-share="instagram">Instagram</button><button data-per-copy>コピー</button></div></section>
+    <footer class="per-reading-foot per-reading-glass-soft"><h3>PER Reading</h3><p>{{ section.settings.footer_text }}</p><small>本鑑定は娯楽・自己理解を目的としたコンテンツです。</small></footer>
   </div>
 </section>
 
 <style>
-#per-lp-{{ section.id }} { --bg1:#20122f; --bg2:#3a2758; --pink:#f7c7ec; --lav:#d7cbff; --gold:#f8dea2; --text:#fdf9ff; --muted:#e8dcf9; background:radial-gradient(160% 120% at 0% 0%, #5f4793 0%, var(--bg1) 58%, #130d23 100%); color:var(--text); padding:40px 0 70px; position:relative; overflow:hidden; }
-#per-lp-{{ section.id }} .per-lp__inner{display:grid;gap:20px;position:relative;z-index:2}
-#per-lp-{{ section.id }} .per-lp__panel{background:linear-gradient(160deg, rgba(255,255,255,.13), rgba(255,255,255,.04));border:1px solid rgba(255,231,188,.35);backdrop-filter:blur(15px) saturate(130%);border-radius:28px;padding:24px;box-shadow:0 15px 45px rgba(11,6,26,.45), inset 0 1px 0 rgba(255,255,255,.3)}
-#per-lp-{{ section.id }} .per-lp__hero{display:grid;gap:16px;position:relative;overflow:hidden}
-#per-lp-{{ section.id }} .per-lp__hero-kirakira{position:absolute;inset:0;background:radial-gradient(circle at 12% 18%, rgba(255,236,183,.26) 0 2px, transparent 2px),radial-gradient(circle at 75% 70%, rgba(235,194,255,.33) 0 2px, transparent 2px);opacity:.7}
-#per-lp-{{ section.id }} .per-lp__hero-couple{width:min(220px,56vw);justify-self:end;filter:drop-shadow(0 6px 20px rgba(0,0,0,.35))}
-#per-lp-{{ section.id }} .per-lp__eyebrow{color:var(--gold);letter-spacing:.11em;margin:0}
-#per-lp-{{ section.id }} .per-lp__title{font-size:clamp(2.5rem,8.8vw,4.6rem);margin:.4rem 0 1rem;line-height:1.24}
-#per-lp-{{ section.id }} .per-lp__subtitle,#per-lp-{{ section.id }} .per-lp__section-text,#per-lp-{{ section.id }} p{color:var(--muted);line-height:1.8}
-#per-lp-{{ section.id }} .per-lp__section-title{color:var(--lav);font-size:clamp(2rem,5.4vw,3rem);margin:0 0 10px}
-#per-lp-{{ section.id }} .per-lp__cta-wrap{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-#per-lp-{{ section.id }} .per-lp__button{border-radius:999px;min-height:48px;padding:11px 20px;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;justify-content:center;transition:.25s}
-#per-lp-{{ section.id }} .per-lp__button:hover{transform:translateY(-2px)}
-#per-lp-{{ section.id }} .per-lp__button--primary{background:linear-gradient(130deg,#f2b9ff 0%,#f8de97 55%,#dca3ff 100%);color:#321d4a;box-shadow:0 0 30px rgba(248,210,255,.45)}
-#per-lp-{{ section.id }} .per-lp__button--ghost{border:1px solid rgba(226,211,255,.65);color:var(--lav);background:rgba(255,255,255,.05)}
-#per-lp-{{ section.id }} .per-lp__button--gold{background:linear-gradient(132deg,#fff4cf 0%,#ffdb95 46%,#ffd6f5 100%);color:#2d1b43;box-shadow:0 0 36px rgba(255,220,158,.4)}
-#per-lp-{{ section.id }} .per-lp__button--full{width:100%;margin-top:14px}
-#per-lp-{{ section.id }} .per-lp__steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
-#per-lp-{{ section.id }} .per-lp__step{display:grid;grid-template-columns:auto 1fr;gap:10px;border:1px solid rgba(248,219,168,.24);border-radius:16px;padding:12px;background:rgba(24,14,38,.44)}
-#per-lp-{{ section.id }} .per-lp__step-number{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#2f1d47;background:linear-gradient(145deg,#ffeebf,#d7a85b);font-weight:700}
-#per-lp-{{ section.id }} .per-lp__field{display:grid;gap:6px;margin-bottom:12px}
-#per-lp-{{ section.id }} .per-lp__field input{border-radius:14px;border:1px solid rgba(238,222,255,.4);background:rgba(255,255,255,.08);color:var(--text);padding:12px}
-#per-lp-{{ section.id }} .per-lp__result-cards,#per-lp-{{ section.id }} .per-lp__price-grid{display:grid;gap:12px}
-#per-lp-{{ section.id }} .per-lp__result-card,#per-lp-{{ section.id }} .per-lp__price-card{border-radius:20px;padding:16px;border:1px solid rgba(245,224,255,.35);background:linear-gradient(160deg, rgba(255,255,255,.15), rgba(255,255,255,.03))}
-#per-lp-{{ section.id }} .score{font-size:2.6rem;line-height:1.1;color:var(--gold);margin:6px 0 4px}
-#per-lp-{{ section.id }} .per-lp__radar-wrap{display:grid;gap:14px;align-items:center}
-#per-lp-{{ section.id }} .per-lp__radar-chart{width:220px;height:220px;justify-self:center;border-radius:50%;background:radial-gradient(circle at center, rgba(255,255,255,.18), rgba(255,255,255,.05)),conic-gradient(from 0deg, rgba(245,205,255,.7), rgba(255,226,170,.8), rgba(212,201,255,.75), rgba(245,205,255,.7));mask:radial-gradient(circle, transparent 0 36%, #000 37%);box-shadow:0 0 42px rgba(248,206,255,.35)}
-#per-lp-{{ section.id }} .per-lp__legend{list-style:none;margin:0;padding:0;display:grid;gap:6px}
-#per-lp-{{ section.id }} .plan{color:var(--gold);margin:0}
-#per-lp-{{ section.id }} .price{font-size:2.4rem;color:var(--lav);margin:4px 0}
-#per-lp-{{ section.id }} .per-lp__price-card--featured{box-shadow:0 0 38px rgba(255,221,177,.35);border-color:rgba(255,233,196,.55)}
-#per-lp-{{ section.id }} .per-lp__bg-glow{position:absolute;width:280px;height:280px;border-radius:50%;filter:blur(48px);opacity:.36}
-#per-lp-{{ section.id }} .per-lp__bg-glow--left{top:-110px;left:-70px;background:#bc9bff}
-#per-lp-{{ section.id }} .per-lp__bg-glow--right{bottom:-120px;right:-70px;background:#ffe095}
-@media (min-width: 750px){
-#per-lp-{{ section.id }}{padding:70px 0 90px}
-#per-lp-{{ section.id }} .per-lp__inner{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-#per-lp-{{ section.id }} .per-lp__hero{grid-column:1/-1;grid-template-columns:1.2fr .8fr;align-items:end}
-#per-lp-{{ section.id }} .per-lp__result-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
-#per-lp-{{ section.id }} .per-lp__price-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-@media (max-width: 749px){
-#per-lp-{{ section.id }} .per-lp__panel{padding:18px;border-radius:22px}
-#per-lp-{{ section.id }} .per-lp__button{width:100%}
-#per-lp-{{ section.id }} .per-lp__cta-wrap{display:grid;grid-template-columns:1fr}
-}
+#per-reading-{{ sid }}{background:radial-gradient(circle at 10% 5%,#fff 0,#f4edff 40%,#f8eff7 68%,#fdfaf5 100%);padding:40px 0;color:#2f2040}
+#per-reading-{{ sid }} .per-reading-shell{display:grid;gap:20px}.per-reading-glass{background:rgba(255,255,255,.62);backdrop-filter:blur(16px);border:1px solid rgba(215,180,255,.4);border-radius:28px;padding:24px;box-shadow:0 12px 36px rgba(78,45,108,.11)}
+#per-reading-{{ sid }} .per-reading-glass-soft{background:rgba(255,255,255,.5);border:1px solid rgba(215,180,255,.32);border-radius:22px;padding:18px}
+#per-reading-{{ sid }} h1,#per-reading-{{ sid }} h2,#per-reading-{{ sid }} h3{margin:.2em 0 .5em}#per-reading-{{ sid }} .per-reading-hero{display:grid;gap:16px}
+#per-reading-{{ sid }} .per-reading-kicker{color:#9c79bf;letter-spacing:.1em}.per-reading-btn{border:0;border-radius:999px;padding:11px 18px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+#per-reading-{{ sid }} .per-reading-btn--gold{background:linear-gradient(135deg,#fff5cc,#f5d28f,#f8e7f6)}
+#per-reading-{{ sid }} .per-reading-btn--pink{background:linear-gradient(135deg,#ffe2f1,#efd2ff)}
+#per-reading-{{ sid }} .per-reading-btn--line{background:#fff;border:1px solid #d9c1f8}.per-reading-grid4,.per-reading-grid2,.per-reading-grid5{display:grid;gap:12px}
+#per-reading-{{ sid }} .per-reading-formrow{display:grid;gap:10px}#per-reading-{{ sid }} input,#per-reading-{{ sid }} select{width:100%;padding:10px;border:1px solid #dbc6f6;border-radius:12px;background:#fff}
+#per-reading-{{ sid }} .per-reading-progress{height:8px;background:#eddffb;border-radius:99px;overflow:hidden}#per-reading-{{ sid }} .per-reading-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ca9eff,#f6cb92)}
+#per-reading-{{ sid }} .per-reading-score{font-size:2.4rem;font-weight:800;color:#8a5ab7}.per-reading-card{background:rgba(255,255,255,.82);border-radius:18px;padding:16px;border:1px solid #ead9ff}.per-reading-card--paper{background:linear-gradient(180deg,#fffaf0,#fff)}
+#per-reading-{{ sid }} .per-reading-universe{background:radial-gradient(circle at 50% 10%,#1d2954 0,#0f1738 100%);color:#fff;border-radius:28px;padding:24px;text-align:center}
+#per-reading-{{ sid }} .per-reading-sharebtns{display:flex;gap:10px;flex-wrap:wrap}#per-reading-{{ sid }} .per-reading-sharebtns button{border:1px solid #d8c3f2;background:#fff;padding:8px 14px;border-radius:999px}
+@media(min-width:990px){#per-reading-{{ sid }} .per-reading-hero{grid-template-columns:1fr 1fr .8fr;align-items:center}.per-reading-grid4{grid-template-columns:repeat(4,1fr)}.per-reading-grid2{grid-template-columns:repeat(2,1fr)}.per-reading-grid5{grid-template-columns:repeat(5,1fr)}.per-reading-formrow{grid-template-columns:repeat(3,1fr)}}
 </style>
+
+<script>
+(()=>{const sid='{{ sid }}';const qEl=document.querySelector('#per-reading-'+sid+' [data-per-question]');if(!qEl)return;
+const stems=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];const branches=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const questions=[{q:'恋愛で重視するのは？',A:'安定',B:'刺激'},{q:'決断の速度は？',A:'慎重',B:'直感'},{q:'仕事スタイルは？',A:'段取り',B:'突破'},{q:'疲れた時は？',A:'一人時間',B:'誰かに相談'},{q:'理想の関係は？',A:'信頼継続',B:'共鳴成長'}];
+const types={AA:{title:'静心調和型',feature:'特徴：安心を育てる共感力',strength:'強み：信頼形成・継続力',caution:'注意点：慎重すぎる停滞'},AB:{title:'月光創造型',feature:'特徴：柔らかい革新性',strength:'強み：変化適応',caution:'注意点：感情の振れ幅'},BA:{title:'陽炎推進型',feature:'特徴：行動先行の実行力',strength:'強み：突破力',caution:'注意点：対話不足'},BB:{title:'天麗共鳴型',feature:'特徴：惹きつける華やかさ',strength:'強み：魅力拡散',caution:'注意点：持続設計'}};
+const PAIR_TEXTS={'子-巳':{type:'すれ違い型',comment:'惹かれるが距離調整が鍵。'},'卯-巳':{type:'補完信頼型',comment:'違いが支え合いに変わる。'},'午-酉':{type:'すれ違い型',comment:'価値観のすり合わせが重要。'},'丑-卯':{type:'静かな共存型',comment:'静かな安心を育てる相性。'}};
+let idx=0,ans=[];const setQ=()=>{qEl.textContent=questions[idx]?`${idx+1}. ${questions[idx].q}`:'回答完了。次へで結果表示';document.querySelector('#per-reading-'+sid+' [data-per-progress]').style.width=((idx/questions.length)*100)+'%';};setQ();
+let selected='A';document.querySelectorAll('#per-reading-'+sid+' [data-per-answer]').forEach(b=>b.onclick=()=>selected=b.dataset.perAnswer);
+document.querySelector('#per-reading-'+sid+' [data-per-next]').onclick=()=>{if(idx<questions.length){ans[idx]=selected;idx++;setQ();if(idx===questions.length)render();}};
+document.querySelector('#per-reading-'+sid+' [data-per-start]').onclick=()=>document.getElementById('per-reading-diagnosis-'+sid).scrollIntoView({behavior:'smooth'});
+function kanshiNum(d){const base=new Date('1900-01-01');const diff=Math.floor((d-base)/86400000);return ((diff%60)+60)%60+1;}function labelByNum(n){return stems[(n-1)%10]+branches[(n-1)%12];}
+function render(){const self=document.querySelector('#per-reading-'+sid+' [data-per-self-dob]').value;const partner=document.querySelector('#per-reading-'+sid+' [data-per-partner-dob]').value;if(!self||!partner)return;const n1=kanshiNum(new Date(self)),n2=kanshiNum(new Date(partner));const b1=branches[(n1-1)%12],b2=branches[(n2-1)%12];const key=(ans[0]||'A')+(ans[1]||'A');const t=types[key]||types.AA;const pair=PAIR_TEXTS[`${b1}-${b2}`]||{type:'努力成長型',comment:'歩み寄りで伸びる関係。'};
+const score=Math.max(55,100-Math.abs(n1-n2));const root='#per-reading-'+sid+' ';document.querySelector(root+'[data-per-result]').hidden=false;document.querySelector(root+'[data-per-compat]').hidden=false;document.querySelector(root+'[data-per-universe]').hidden=false;
+(document.querySelector(root+'[data-per-type-title]')).textContent=t.title;(document.querySelector(root+'[data-per-type-feature]')).textContent=t.feature;(document.querySelector(root+'[data-per-type-strength]')).textContent=t.strength;(document.querySelector(root+'[data-per-type-caution]')).textContent=t.caution;
+document.querySelector(root+'[data-per-report]').textContent=`あなたの日干支は${labelByNum(n1)}、お相手は${labelByNum(n2)}。${pair.type}の傾向。`;
+document.querySelector(root+'[data-per-compat-score]').textContent=score+'点';document.querySelector(root+'[data-per-compat-type]').textContent=pair.type;document.querySelector(root+'[data-per-compat-text]').textContent=pair.comment;drawCircle(n1);drawRadar([score,78,84,72,88,80]);}
+function drawCircle(active){const c=document.getElementById('per-reading-circle-'+sid);if(!c)return;const x=c.getContext('2d');const cx=180,cy=180,r=145;x.clearRect(0,0,360,360);for(let i=1;i<=60;i++){const a=(Math.PI*2/60)*i-Math.PI/2;const px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r;x.fillStyle=i===active?'#c793ff':'#7d5ea0';x.beginPath();x.arc(px,py,i===active?5:2.5,0,Math.PI*2);x.fill();if(i%5===0){x.fillStyle='#5f4a7c';x.font='11px sans-serif';x.fillText(String(i),cx+Math.cos(a)*(r+16)-6,cy+Math.sin(a)*(r+16)+4);}}}
+function drawRadar(vals){const c=document.getElementById('per-reading-radar-'+sid);if(!c)return;const g=c.getContext('2d');const labs=['仕事','恋愛','人間関係','未来','学び','魅力'],cx=170,cy=170,max=130;g.clearRect(0,0,340,340);for(let l=1;l<=5;l++){g.strokeStyle='rgba(255,255,255,.2)';g.beginPath();for(let i=0;i<6;i++){const a=(Math.PI*2/6)*i-Math.PI/2,rr=max*l/5,px=cx+Math.cos(a)*rr,py=cy+Math.sin(a)*rr;i?g.lineTo(px,py):g.moveTo(px,py);}g.closePath();g.stroke();}
+g.fillStyle='rgba(203,154,255,.45)';g.beginPath();vals.forEach((v,i)=>{const a=(Math.PI*2/6)*i-Math.PI/2,rr=max*(v/100),px=cx+Math.cos(a)*rr,py=cy+Math.sin(a)*rr;i?g.lineTo(px,py):g.moveTo(px,py);});g.closePath();g.fill();g.fillStyle='#fff';labs.forEach((t,i)=>{const a=(Math.PI*2/6)*i-Math.PI/2;g.fillText(t,cx+Math.cos(a)*(max+18)-10,cy+Math.sin(a)*(max+18));});}
+})();
+</script>
 
 {% schema %}
 {
@@ -136,25 +134,31 @@
   "tag": "section",
   "class": "section",
   "settings": [
-    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme_1" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PER Reading | Premium Love Divination" },
-    { "type": "text", "id": "title", "label": "Title", "default": "縁の糸を読み解く、高級恋愛鑑定" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "和の叡智とスピリチュアルリーディングで、あなたの恋の転機を静かに映し出します。" },
-    { "type": "image_picker", "id": "hero_couple_image", "label": "Hero right image (couple silhouette)" },
-    { "type": "text", "id": "primary_button_label", "label": "Primary button label", "default": "今すぐ鑑定を始める" },
-    { "type": "url", "id": "primary_button_link", "label": "Primary button link" },
-    { "type": "text", "id": "secondary_button_label", "label": "Secondary button label", "default": "診断の流れを見る" },
-    { "type": "url", "id": "secondary_button_link", "label": "Secondary button link" },
-    { "type": "text", "id": "diagnosis_heading", "label": "Diagnosis heading", "default": "3分でわかる恋愛相性診断" },
-    { "type": "textarea", "id": "diagnosis_text", "label": "Diagnosis text", "default": "生年月日と今の想いを入力するだけ。あなたの恋が進む道筋を、淡く神秘的な言葉でお届けします。" },
-    { "type": "text", "id": "diagnosis_button_label", "label": "Diagnosis CTA label", "default": "無料診断を試す" },
-    { "type": "url", "id": "offer_button_link", "label": "Offer button link" },
-    { "type": "text", "id": "offer_button_label", "label": "Offer button label", "default": "プレミアム鑑定へ進む" }
+    {"type":"color_scheme","id":"color_scheme","label":"Color scheme","default":"scheme_1"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"PER Reading | Premium"},
+    {"type":"text","id":"title","label":"Title","default":"高級占いWebアプリ PER Reading"},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"60干支円・相性位相法・宇宙盤を統合した診断UI。"},
+    {"type":"text","id":"primary_button_label","label":"Primary button label","default":"無料診断を始める"},
+    {"type":"url","id":"primary_button_link","label":"Primary button link"},
+    {"type":"text","id":"secondary_button_label","label":"Secondary button label","default":"診断の仕組みを見る"},
+    {"type":"image_picker","id":"silhouette_image","label":"Couple silhouette image"},
+    {"type":"text","id":"menu_title_1","label":"Menu 1 title","default":"詳細PER鑑定書"},
+    {"type":"text","id":"menu_price_1","label":"Menu 1 price","default":"¥4,980"},
+    {"type":"url","id":"menu_link_1","label":"Menu 1 link"},
+    {"type":"text","id":"menu_title_2","label":"Menu 2 title","default":"恋愛未来鑑定"},
+    {"type":"text","id":"menu_price_2","label":"Menu 2 price","default":"¥6,800"},
+    {"type":"url","id":"menu_link_2","label":"Menu 2 link"},
+    {"type":"text","id":"menu_title_3","label":"Menu 3 title","default":"LINE個別鑑定"},
+    {"type":"text","id":"menu_price_3","label":"Menu 3 price","default":"¥9,800"},
+    {"type":"url","id":"menu_link_3","label":"Menu 3 link"},
+    {"type":"text","id":"menu_title_4","label":"Menu 4 title","default":"相性深掘り鑑定"},
+    {"type":"text","id":"menu_price_4","label":"Menu 4 price","default":"¥8,800"},
+    {"type":"url","id":"menu_link_4","label":"Menu 4 link"},
+    {"type":"text","id":"menu_title_5","label":"Menu 5 title","default":"運命の流れ鑑定"},
+    {"type":"text","id":"menu_price_5","label":"Menu 5 price","default":"¥12,000"},
+    {"type":"url","id":"menu_link_5","label":"Menu 5 link"},
+    {"type":"textarea","id":"footer_text","label":"Footer text","default":"PER Readingは和の占術データをもとに自己理解を促す診断サービスです。"}
   ],
-  "blocks": [
-    {"type":"step","name":"Step","settings":[{"type":"text","id":"title","label":"Step title","default":"質問に回答"},{"type":"textarea","id":"text","label":"Step text","default":"恋愛状況や気になるお相手について、直感のままに入力します。"}]}
-  ],
-  "max_blocks": 4,
-  "presets": [{"name":"PER Reading Top LP","blocks":[{"type":"step","settings":{"title":"恋の現状を入力","text":"あなたとお相手の関係性、今抱えている想いを丁寧に入力。"}},{"type":"step","settings":{"title":"和風スピリチュアル解析","text":"霊感タロットと和の象徴を掛け合わせ、深層心理を読み解きます。"}},{"type":"step","settings":{"title":"結果と開運アドバイス","text":"恋が動く時期・行動のヒント・二人の未来像を受け取れます。"}}]}]
+  "presets":[{"name":"PER Reading Top LP"}]
 }
 {% endschema %}
