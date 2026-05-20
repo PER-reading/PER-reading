@@ -3,32 +3,94 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PER 簡易診断UI</title>
+    <title>PER Reading | 無料相性診断</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>PER 簡易診断UI</h1>
-      <p class="lead">npm不要で動作する静的版です。60干支CSVを読み込んで2人の干支関係を簡易表示します。</p>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
 
-      <section class="card">
-        <h2>診断入力</h2>
-        <div class="form-grid">
-          <label>Person A
-            <select id="personA"></select>
-          </label>
-          <label>Person B
-            <select id="personB"></select>
-          </label>
+    <header class="hero container">
+      <p class="eyebrow">Premium Esoteric Resonance</p>
+      <h1>PER Reading<br><span>魂の波長を、上品に読み解く。</span></h1>
+      <p class="hero-copy">60干支サイクルを基盤に、二人の相性をシンプルかつ直感的に可視化。和モダンな感性と現代的UIで、初めての方でも安心して診断できます。</p>
+      <a href="#diagnosis" class="btn-primary">無料で相性を診断する</a>
+
+      <div class="hero-visual glass-card">
+        <div class="zodiac-wheel" aria-hidden="true">
+          <div class="wheel-ring"></div>
+          <div class="wheel-core">PER</div>
+          <span class="star star-a">✦</span>
+          <span class="star star-b">✧</span>
+          <span class="star star-c">✦</span>
         </div>
-        <button id="diagnoseBtn">診断する</button>
+        <div class="silhouette-wrap" aria-hidden="true">
+          <div class="silhouette silhouette-left"></div>
+          <div class="light-line"></div>
+          <div class="silhouette silhouette-right"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="content-section">
+        <h2>PER占いでわかること</h2>
+        <div class="card-grid three">
+          <article class="glass-card info-card"><h3>関係性の土台</h3><p>同一型・同支連動型など、二人の相性タイプを判定。</p></article>
+          <article class="glass-card info-card"><h3>距離感のクセ</h3><p>60循環上の差分をもとに、噛み合いやすさを可視化。</p></article>
+          <article class="glass-card info-card"><h3>関係改善のヒント</h3><p>相手理解を深めるための観点をシンプルに提示します。</p></article>
+        </div>
       </section>
 
-      <section class="card" id="resultCard">
-        <h2>診断結果</h2>
-        <div id="result">データ読み込み後に「診断する」を押してください。</div>
+      <section class="content-section">
+        <h2>無料診断の流れ</h2>
+        <div class="card-grid flow-grid">
+          <article class="glass-card flow-card"><span>01</span><p>二人の干支番号を選択</p></article>
+          <article class="glass-card flow-card"><span>02</span><p>「診断する」をタップ</p></article>
+          <article class="glass-card flow-card"><span>03</span><p>相性タイプとスコアを確認</p></article>
+        </div>
+      </section>
+
+      <section class="content-section" id="diagnosis">
+        <h2>無料相性診断</h2>
+        <section class="glass-card form-card">
+          <h3>診断入力</h3>
+          <div class="form-grid">
+            <label>Person A
+              <select id="personA"></select>
+            </label>
+            <label>Person B
+              <select id="personB"></select>
+            </label>
+          </div>
+          <button id="diagnoseBtn" class="btn-primary">診断する</button>
+        </section>
+
+        <section class="glass-card result-card" id="resultCard">
+          <h3>診断結果</h3>
+          <div class="score-wrap">
+            <p class="score-label">Compatibility Score</p>
+            <p class="score-value" id="scoreValue">--</p>
+          </div>
+          <div id="result">データ読み込み後に「診断する」を押してください。</div>
+        </section>
+      </section>
+
+      <section class="content-section">
+        <h2>鑑定メニュー</h2>
+        <div class="card-grid three">
+          <article class="glass-card menu-card"><h3>恋愛相性鑑定</h3><p>価値観・距離感・関係進展のヒントを立体的に解析。</p></article>
+          <article class="glass-card menu-card"><h3>仕事パートナー鑑定</h3><p>役割分担や意思決定の噛み合いをわかりやすく整理。</p></article>
+          <article class="glass-card menu-card"><h3>運気バイオリズム鑑定</h3><p>周期の流れを捉え、行動の最適タイミングを提案。</p></article>
+        </div>
       </section>
     </main>
+
+    <footer class="footer">
+      <p>PER Reading © 2026</p>
+      <p>和モダン×スピリチュアルの上質な診断体験</p>
+    </footer>
 
     <script src="app.js"></script>
   </body>
