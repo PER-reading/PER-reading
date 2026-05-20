@@ -1,0 +1,13 @@
+:root {
+  --page-width: 1200px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.page-width {
+  width: min(var(--page-width), calc(100% - 2rem));
+  margin-inline: auto;
+}
