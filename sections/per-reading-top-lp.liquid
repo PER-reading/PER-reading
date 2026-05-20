@@ -1,0 +1,322 @@
+{% comment %}
+  PER Reading Top LP (Dawn compatible)
+{% endcomment %}
+
+<section class="per-lp color-{{ section.settings.color_scheme }}" id="per-lp-{{ section.id }}">
+  <div class="per-lp__bg-glow per-lp__bg-glow--left" aria-hidden="true"></div>
+  <div class="per-lp__bg-glow per-lp__bg-glow--right" aria-hidden="true"></div>
+
+  <div class="per-lp__inner page-width">
+    <header class="per-lp__hero">
+      {% if section.settings.eyebrow != blank %}
+        <p class="per-lp__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      <h1 class="per-lp__title">{{ section.settings.title }}</h1>
+
+      {% if section.settings.subtitle != blank %}
+        <p class="per-lp__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+
+      <div class="per-lp__cta-wrap">
+        {% if section.settings.primary_button_label != blank and section.settings.primary_button_link != blank %}
+          <a href="{{ section.settings.primary_button_link }}" class="per-lp__button per-lp__button--primary">
+            {{ section.settings.primary_button_label }}
+          </a>
+        {% endif %}
+
+        {% if section.settings.secondary_button_label != blank and section.settings.secondary_button_link != blank %}
+          <a href="{{ section.settings.secondary_button_link }}" class="per-lp__button per-lp__button--ghost">
+            {{ section.settings.secondary_button_label }}
+          </a>
+        {% endif %}
+      </div>
+    </header>
+
+    <div class="per-lp__diagnosis" id="diagnosis-{{ section.id }}">
+      <h2 class="per-lp__section-title">{{ section.settings.diagnosis_heading }}</h2>
+      <p class="per-lp__section-text">{{ section.settings.diagnosis_text }}</p>
+
+      <ul class="per-lp__steps" role="list">
+        {% for block in section.blocks %}
+          {% if block.type == 'step' %}
+            <li class="per-lp__step" {{ block.shopify_attributes }}>
+              <span class="per-lp__step-number">{{ forloop.index }}</span>
+              <div>
+                <h3 class="per-lp__step-title">{{ block.settings.title }}</h3>
+                <p class="per-lp__step-text">{{ block.settings.text }}</p>
+              </div>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% if section.settings.diagnosis_button_label != blank and section.settings.diagnosis_button_link != blank %}
+        <a href="{{ section.settings.diagnosis_button_link }}" class="per-lp__button per-lp__button--primary per-lp__button--full">
+          {{ section.settings.diagnosis_button_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    <aside class="per-lp__offer">
+      <p class="per-lp__offer-lead">{{ section.settings.offer_lead }}</p>
+      <h2 class="per-lp__offer-title">{{ section.settings.offer_title }}</h2>
+      <p class="per-lp__offer-text">{{ section.settings.offer_text }}</p>
+      {% if section.settings.offer_button_label != blank and section.settings.offer_button_link != blank %}
+        <a href="{{ section.settings.offer_button_link }}" class="per-lp__button per-lp__button--gold per-lp__button--full">
+          {{ section.settings.offer_button_label }}
+        </a>
+      {% endif %}
+    </aside>
+  </div>
+</section>
+
+<style>
+  #per-lp-{{ section.id }} {
+    --per-bg: radial-gradient(100% 140% at 0% 0%, #6e5ba7 0%, #34254f 55%, #1e1630 100%);
+    --per-card: rgba(255, 255, 255, 0.06);
+    --per-line: rgba(245, 215, 132, 0.36);
+    --per-gold: #f5d784;
+    --per-gold-deep: #c79d41;
+    --per-lavender: #d9c8ff;
+    --per-text: #f8f4ff;
+    --per-text-muted: #dfd4f4;
+
+    position: relative;
+    overflow: hidden;
+    background: var(--per-bg);
+    color: var(--per-text);
+    padding: 40px 0 56px;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 24px;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__hero,
+  #per-lp-{{ section.id }} .per-lp__diagnosis,
+  #per-lp-{{ section.id }} .per-lp__offer {
+    background: var(--per-card);
+    backdrop-filter: blur(7px);
+    border: 1px solid var(--per-line);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+  }
+
+  #per-lp-{{ section.id }} .per-lp__eyebrow {
+    margin: 0;
+    color: var(--per-gold);
+    letter-spacing: 0.13em;
+    font-size: 1.1rem;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__title {
+    margin: 10px 0 12px;
+    font-size: clamp(2.7rem, 10vw, 4.4rem);
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__subtitle,
+  #per-lp-{{ section.id }} .per-lp__section-text,
+  #per-lp-{{ section.id }} .per-lp__offer-text,
+  #per-lp-{{ section.id }} .per-lp__step-text {
+    color: var(--per-text-muted);
+    margin: 0;
+    line-height: 1.8;
+    font-size: 1.45rem;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__cta-wrap {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 46px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: transform 180ms ease, opacity 180ms ease, box-shadow 180ms ease;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__button:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__button--primary {
+    color: #24183b;
+    background: linear-gradient(145deg, #f9e6a7, var(--per-gold-deep));
+    box-shadow: 0 8px 18px rgba(204, 160, 65, 0.32);
+  }
+
+  #per-lp-{{ section.id }} .per-lp__button--ghost {
+    color: var(--per-lavender);
+    border-color: rgba(217, 200, 255, 0.6);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  #per-lp-{{ section.id }} .per-lp__button--gold {
+    color: #231530;
+    background: linear-gradient(140deg, #fff2c4, #d4a444);
+    box-shadow: 0 8px 24px rgba(220, 176, 76, 0.34);
+  }
+
+  #per-lp-{{ section.id }} .per-lp__button--full {
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__section-title,
+  #per-lp-{{ section.id }} .per-lp__offer-title {
+    margin: 0 0 10px;
+    font-size: clamp(2rem, 5.8vw, 3rem);
+    color: var(--per-lavender);
+  }
+
+  #per-lp-{{ section.id }} .per-lp__steps {
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(245, 215, 132, 0.25);
+    background: rgba(27, 20, 40, 0.42);
+  }
+
+  #per-lp-{{ section.id }} .per-lp__step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffeab4, #c99535);
+    color: #27163a;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__step-title {
+    margin: 2px 0 4px;
+    font-size: 1.55rem;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__offer-lead {
+    margin: 0;
+    color: var(--per-gold);
+    font-weight: 600;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__bg-glow {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    filter: blur(42px);
+    opacity: 0.38;
+    pointer-events: none;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__bg-glow--left {
+    top: -90px;
+    left: -50px;
+    background: #b794ff;
+  }
+
+  #per-lp-{{ section.id }} .per-lp__bg-glow--right {
+    bottom: -110px;
+    right: -40px;
+    background: #ffd77b;
+  }
+
+  @media screen and (min-width: 750px) {
+    #per-lp-{{ section.id }} {
+      padding: 72px 0;
+    }
+
+    #per-lp-{{ section.id }} .per-lp__inner {
+      gap: 28px;
+      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-areas:
+        "hero diagnosis"
+        "offer diagnosis";
+    }
+
+    #per-lp-{{ section.id }} .per-lp__hero { grid-area: hero; }
+    #per-lp-{{ section.id }} .per-lp__diagnosis { grid-area: diagnosis; }
+    #per-lp-{{ section.id }} .per-lp__offer { grid-area: offer; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PER Reading Top LP",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme_1" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PER Reading | Premium Love Divination" },
+    { "type": "text", "id": "title", "label": "Title", "default": "縁の糸を読み解く、高級恋愛鑑定" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "和の叡智とスピリチュアルリーディングで、あなたの恋の転機を静かに映し出します。" },
+
+    { "type": "text", "id": "primary_button_label", "label": "Primary button label", "default": "今すぐ鑑定を始める" },
+    { "type": "url", "id": "primary_button_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_button_label", "label": "Secondary button label", "default": "診断の流れを見る" },
+    { "type": "url", "id": "secondary_button_link", "label": "Secondary button link" },
+
+    { "type": "text", "id": "diagnosis_heading", "label": "Diagnosis heading", "default": "3分でわかる恋愛相性診断" },
+    { "type": "textarea", "id": "diagnosis_text", "label": "Diagnosis text", "default": "生年月日と今の想いを入力するだけ。あなたの恋が進む道筋を、淡く神秘的な言葉でお届けします。" },
+    { "type": "text", "id": "diagnosis_button_label", "label": "Diagnosis CTA label", "default": "無料診断を試す" },
+    { "type": "url", "id": "diagnosis_button_link", "label": "Diagnosis CTA link" },
+
+    { "type": "text", "id": "offer_lead", "label": "Offer lead", "default": "初回限定" },
+    { "type": "text", "id": "offer_title", "label": "Offer title", "default": "特別鑑定プラン" },
+    { "type": "textarea", "id": "offer_text", "label": "Offer text", "default": "恋愛成就を願う和風スピリチュアル鑑定を、限定価格でご案内。大切なご縁の未来を丁寧に紐解きます。" },
+    { "type": "text", "id": "offer_button_label", "label": "Offer button label", "default": "プレミアム鑑定へ進む" },
+    { "type": "url", "id": "offer_button_link", "label": "Offer button link" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Step title", "default": "質問に回答" },
+        { "type": "textarea", "id": "text", "label": "Step text", "default": "恋愛状況や気になるお相手について、直感のままに入力します。" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "PER Reading Top LP",
+      "blocks": [
+        { "type": "step", "settings": { "title": "恋の現状を入力", "text": "あなたとお相手の関係性、今抱えている想いを丁寧に入力。" } },
+        { "type": "step", "settings": { "title": "和風スピリチュアル解析", "text": "霊感タロットと和の象徴を掛け合わせ、深層心理を読み解きます。" } },
+        { "type": "step", "settings": { "title": "結果と開運アドバイス", "text": "恋が動く時期・行動のヒント・二人の未来像を受け取れます。" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
